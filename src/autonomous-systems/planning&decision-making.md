@@ -72,6 +72,28 @@ McAllister et al. (66)提出使用有原则的贝叶斯框架(a principled Bayes
 
 ### 端到端规划(End-to-End Planning)
 
+传统的自动驾驶架构中，功能被封装在模块之间清晰可见的接口中，也被称作中介感知(mediated perception)。
+
+另一种架构是对感知模块的某些部分进行训练来包含规划模块的部分任务。
+
+* Caltagirone et al. (68)，通过整合激光雷达点云、GPS-惯性测量单元（IMU）信息和谷歌导航信息来生成行驶路径。
+* 语义分割网络可用于在相机图像空间(camera image space (69))中生成路径。
+
+更进一步，架构可以学习车道和道路跟踪的整个任务，而无需手动分解为道路或车道标记检测、语义抽象、路径规划和控制。
+
+* ALVINN (Autonomous Land Vehicle in a Neural Network) (70)，训练神经网络从相机图像输出行驶的转向角，来让车辆保持在道路上行驶。
+* Chen et al. (67)将其称为behavior reflex approach。
+* NVIDIA (72)，训练了一个深度卷积神经网络，可以将前向摄像头的原始(raw)图像直接映射到转向命令，并能够处理具有挑战性的场景。
+* Bojarski et al. (73)，展示了神经网络能够学习类似车道标线、道路边界和其他车辆形状的特征(feature)。
+* Xu et al. (75)，使用大规模行驶视频数据集来训练了一个端到端的全卷积LSTM神经网络，可以预测离散行为(直行、停止、左转、右转)和连续行为(方向盘角度控制)。
+* SafeDAgger (76)，DAgger (77)。
+
+端到端运动规划也被运用于机器人学。
+
+另一条研究路线是在模拟器中学习驾驶行为，可以在安全环境下观察失败的情况，适合强化学习的训练。
+
+* Wolf et al. (81)，在模拟环境下使用Deep Q-Network来学习驾驶车辆。
+
 ## 4.BEHAVIOR-AWARE MOTION PLANNING
 
 ## 5.VERIFICATION AND SYNTHESIS
