@@ -98,7 +98,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="../meta-learning.html"><strong aria-hidden="true">1.</strong> Meta-Learning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../meta-learning/MAML.html"><strong aria-hidden="true">1.1.</strong> Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></li><li class="chapter-item expanded "><a href="../meta-learning/MAML++.html"><strong aria-hidden="true">1.2.</strong> HOW TO TRAIN YOUR MAML</a></li><li class="chapter-item expanded "><a href="../meta-learning/ANIL.html"><strong aria-hidden="true">1.3.</strong> RAPID LEARNING OR FEATURE REUSE? TOWARDS UNDERSTANDING THE EFFECTIVENESS OF MAML</a></li></ol></li><li class="chapter-item expanded "><a href="../autonomous-systems.html"><strong aria-hidden="true">2.</strong> Autonomous Systems</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../autonomous-systems/planning&decision-making.html" class="active"><strong aria-hidden="true">2.1.</strong> [review]Planning and Decision-Making for Autonomous Vehicles</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../meta-learning.html"><strong aria-hidden="true">1.</strong> Meta-Learning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../meta-learning/MAML.html"><strong aria-hidden="true">1.1.</strong> Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></li><li class="chapter-item expanded "><a href="../meta-learning/MAML++.html"><strong aria-hidden="true">1.2.</strong> HOW TO TRAIN YOUR MAML</a></li><li class="chapter-item expanded "><a href="../meta-learning/ANIL.html"><strong aria-hidden="true">1.3.</strong> RAPID LEARNING OR FEATURE REUSE? TOWARDS UNDERSTANDING THE EFFECTIVENESS OF MAML</a></li><li class="chapter-item expanded "><a href="../meta-learning/FO-MAML.html"><strong aria-hidden="true">1.4.</strong> On First-Order Meta-Learning Algorithms</a></li><li class="chapter-item expanded "><a href="../meta-learning/HF-MAML.html"><strong aria-hidden="true">1.5.</strong> On the Convergence Theory of Gradient-Based Model-Agnostic Meta-Learning Algorithms</a></li></ol></li><li class="chapter-item expanded "><a href="../autonomous-systems.html"><strong aria-hidden="true">2.</strong> Autonomous Systems</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../autonomous-systems/planning&decision-making.html" class="active"><strong aria-hidden="true">2.1.</strong> [review]Planning and Decision-Making for Autonomous Vehicles</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -245,6 +245,26 @@ parallel autonomy指自动驾驶系统处于后台运行来保证安全，而由
 网络不确定性可以由Monte Carlo dropout sampling (65)估计。
 McAllister et al. (66)提出使用有原则的贝叶斯框架(a principled Bayesian framework)估计和传播整个系统管道中每个组件的不确定性，将使自动驾驶汽车能够适当地应对高不确定性。</p>
 <h3 id="端到端规划end-to-end-planning"><a class="header" href="#端到端规划end-to-end-planning">端到端规划(End-to-End Planning)</a></h3>
+<p>传统的自动驾驶架构中，功能被封装在模块之间清晰可见的接口中，也被称作中介感知(mediated perception)。</p>
+<p>另一种架构是对感知模块的某些部分进行训练来包含规划模块的部分任务。</p>
+<ul>
+<li>Caltagirone et al. (68)，通过整合激光雷达点云、GPS-惯性测量单元（IMU）信息和谷歌导航信息来生成行驶路径。</li>
+<li>语义分割网络可用于在相机图像空间(camera image space (69))中生成路径。</li>
+</ul>
+<p>更进一步，架构可以学习车道和道路跟踪的整个任务，而无需手动分解为道路或车道标记检测、语义抽象、路径规划和控制。</p>
+<ul>
+<li>ALVINN (Autonomous Land Vehicle in a Neural Network) (70)，训练神经网络从相机图像输出行驶的转向角，来让车辆保持在道路上行驶。</li>
+<li>Chen et al. (67)将其称为behavior reflex approach。</li>
+<li>NVIDIA (72)，训练了一个深度卷积神经网络，可以将前向摄像头的原始(raw)图像直接映射到转向命令，并能够处理具有挑战性的场景。</li>
+<li>Bojarski et al. (73)，展示了神经网络能够学习类似车道标线、道路边界和其他车辆形状的特征(feature)。</li>
+<li>Xu et al. (75)，使用大规模行驶视频数据集来训练了一个端到端的全卷积LSTM神经网络，可以预测离散行为(直行、停止、左转、右转)和连续行为(方向盘角度控制)。</li>
+<li>SafeDAgger (76)，DAgger (77)。</li>
+</ul>
+<p>端到端运动规划也被运用于机器人学。</p>
+<p>另一条研究路线是在模拟器中学习驾驶行为，可以在安全环境下观察失败的情况，适合强化学习的训练。</p>
+<ul>
+<li>Wolf et al. (81)，在模拟环境下使用Deep Q-Network来学习驾驶车辆。</li>
+</ul>
 <h2 id="4behavior-aware-motion-planning"><a class="header" href="#4behavior-aware-motion-planning">4.BEHAVIOR-AWARE MOTION PLANNING</a></h2>
 <h2 id="5verification-and-synthesis"><a class="header" href="#5verification-and-synthesis">5.VERIFICATION AND SYNTHESIS</a></h2>
 <h2 id="6fleet-management"><a class="header" href="#6fleet-management">6.FLEET MANAGEMENT</a></h2>
