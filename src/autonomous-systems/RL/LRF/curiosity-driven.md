@@ -12,7 +12,7 @@ Two broad classes:
 The effectiveness of curiosity formulation in all three of these roles:
 
 * solving tasks with sparse rewards
-* helps an agent explore its environment in the quest for new knowledge 
+* helps an agent explore its environment in the quest for new knowledge
 * learn skills that might be helpful in future scenarios
 
 ## Curiosity-Driven Exploration
@@ -92,5 +92,3 @@ The overall optimization problem:
 $$
 \min_{\theta_P, \theta_I, \theta_F} [-\lambda \mathbb{E}_{\pi(s_t;\theta_P)}[\Sigma_t r_t] + (1-\beta) L_I + \beta L_F], 0 \leq \beta \leq 1, \lambda > 0.
 $$
-
-
