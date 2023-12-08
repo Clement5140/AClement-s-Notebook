@@ -100,7 +100,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="meta-learning.html"><strong aria-hidden="true">1.</strong> Meta-Learning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="meta-learning/MAML.html"><strong aria-hidden="true">1.1.</strong> Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></li><li class="chapter-item expanded "><a href="meta-learning/MAML++.html"><strong aria-hidden="true">1.2.</strong> HOW TO TRAIN YOUR MAML</a></li><li class="chapter-item expanded "><a href="meta-learning/ANIL.html"><strong aria-hidden="true">1.3.</strong> RAPID LEARNING OR FEATURE REUSE? TOWARDS UNDERSTANDING THE EFFECTIVENESS OF MAML</a></li><li class="chapter-item expanded "><a href="meta-learning/FO-MAML.html"><strong aria-hidden="true">1.4.</strong> On First-Order Meta-Learning Algorithms</a></li><li class="chapter-item expanded "><a href="meta-learning/HF-MAML.html"><strong aria-hidden="true">1.5.</strong> On the Convergence Theory of Gradient-Based Model-Agnostic Meta-Learning Algorithms</a></li></ol></li><li class="chapter-item expanded "><a href="autonomous-systems.html"><strong aria-hidden="true">2.</strong> Autonomous Systems</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="autonomous-systems/planning&decision-making.html"><strong aria-hidden="true">2.1.</strong> [review]Planning and Decision-Making for Autonomous Vehicles</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="meta-learning.html"><strong aria-hidden="true">1.</strong> Meta-Learning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="meta-learning/MAML.html"><strong aria-hidden="true">1.1.</strong> Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></li><li class="chapter-item expanded "><a href="meta-learning/MAML++.html"><strong aria-hidden="true">1.2.</strong> HOW TO TRAIN YOUR MAML</a></li><li class="chapter-item expanded "><a href="meta-learning/ANIL.html"><strong aria-hidden="true">1.3.</strong> RAPID LEARNING OR FEATURE REUSE? TOWARDS UNDERSTANDING THE EFFECTIVENESS OF MAML</a></li><li class="chapter-item expanded "><a href="meta-learning/FO-MAML.html"><strong aria-hidden="true">1.4.</strong> On First-Order Meta-Learning Algorithms</a></li><li class="chapter-item expanded "><a href="meta-learning/HF-MAML.html"><strong aria-hidden="true">1.5.</strong> On the Convergence Theory of Gradient-Based Model-Agnostic Meta-Learning Algorithms</a></li><li class="chapter-item expanded "><a href="meta-learning/iMAML.html"><strong aria-hidden="true">1.6.</strong> Meta-Learning with Implicit Gradients</a></li></ol></li><li class="chapter-item expanded "><a href="autonomous-systems.html"><strong aria-hidden="true">2.</strong> Autonomous Systems</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="autonomous-systems/planning&decision-making.html"><strong aria-hidden="true">2.1.</strong> [review]Planning and Decision-Making for Autonomous Vehicles</a></li><li class="chapter-item expanded "><a href="autonomous-systems/motion-planning-review.html"><strong aria-hidden="true">2.2.</strong> [review]A Review of Mobile Robot Motion Planning Methods</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -354,10 +354,51 @@ $$</p>
 <p>HF-MAML的算法如下：</p>
 <p><img src="meta-learning/assets/HF-MAML-3.png" alt="3" /></p>
 <h2 id="理论分析"><a class="header" href="#理论分析">理论分析</a></h2>
+<p>设\(T = {T_i}_{i \in I} \)表示所有任务的集合，\(p\)表示\(T\)的概率分布，\(T_i\)以\(p_i := p(T_i)\)的概率被抽样，\(T_i\)的损失函数用\(f_i(w):\mathbb{R}^d \rightarrow \mathbb{R}\)表示，定义期望</p>
+<p>$$
+f(w) := \mathbb{E}_{i \sim p} [f_i(w)]
+$$</p>
+<p>元学习优化问题：</p>
+<p>$$
+\min_{w \in \mathbb{R}^d} F(w) := \mathbb{E} _ {i \sim p} [F_i(w)] := \mathbb{E} _ {i \sim p} [f_i(w - \alpha \nabla f_i(w))]
+$$</p>
+<p>假设\(F\)为一般的非凸但光滑的函数。</p>
+<p><strong>定义1</strong>：向量\(w_\epsilon \in \mathbb{R}^d\)被称为上述优化问题的\(\epsilon\)-近似一阶不动点(first order stationary point, FOSP)，如果其满足：</p>
+<p>$$
+\mathbb{E} [||\nabla F(w_\epsilon)||] \leq \epsilon
+$$</p>
+<p>定义说明一个点\(w_\epsilon\)是一个\(\epsilon\)-FOSP，如果它对全局损失函数\(F\)的梯度模长(gradient norm)的期望小于\(\epsilon\)。</p>
+<p>本节的目的是对于MAML、FO-MAML和HF-MAML寻找两个问题的答案：</p>
+<ul>
+<li>对于任意的\(\epsilon&gt;0\)，可以找到一个\(\epsilon\)-FOSP吗？</li>
+<li>若可以，需要多少次迭代才能到达该不动点？</li>
+</ul>
+<p><strong>假设1</strong>：\(F\)有下界，即\(\min_{w \in \mathbb{R}^d} F(w) &gt; -\infty\)。</p>
+<p><strong>假设2</strong>：对于任意\(i \in I\)，\(f_i\)二次连续可微且\(L_i\)-光滑，即对于任意\(w,u \in \mathbb{R}^d\)，有</p>
+<p>$$
+||\nabla f_i(w) - \nabla f_i (u)|| \leq L_i ||w - u||
+$$</p>
+<p>在二次连续可微的假设下，再假设一阶导\(L_i\)-光滑可以推出：</p>
+<p>$$
+-L_i I_d \preceq \nabla^2 f_i(w) \preceq L_i I_d, \forall w \in \mathbb{R}^d \
+-\frac{L_i}{2} ||w - u||^2 \leq f_i(w) - f_i(u) - \nabla f_i(u)^\top (w-u) \leq \frac{L_i}{2}||w-u||^2, \forall w, u \in \mathbb{R}^d
+$$</p>
+<p>为了简单，此后使用\(L := \max_i L_i\)，可以被看作所有\(i \in I\)的\(\nabla f_i\)利普希茨连续常数。</p>
+<p>在MAML的参数更新中出现了\(f_i\)的二阶导，所以需要对目标函数的Hessian矩阵施加一个正则性条件：</p>
+<p><strong>假设3</strong>：</p>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="meta-learning-with-implicit-gradients"><a class="header" href="#meta-learning-with-implicit-gradients">Meta-Learning with Implicit Gradients</a></h1>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="autonomous-systems"><a class="header" href="#autonomous-systems">Autonomous Systems</a></h1>
 <p>自动驾驶相关论文。</p>
 <ul>
 <li><a href="./autonomous-systems/planning&amp;decision-making.html">[review]Planning and Decision-Making for Autonomous Vehicles</a></li>
+<li><a href="./autonomous-systems/motion-planning-review.html">[review]A Review of Mobile Robot Motion Planning Methods</a></li>
+<li>RL
+<ul>
+<li><a href="./autonomous-systems/RL/A3C.html">Asynchronous Methods for Deep Reinforcement Learning (A3C)</a></li>
+<li><a href="./autonomous-systems/RL/LRF/curiosity-driven.html">Curiosity-driven Exploration by Self-supervised Prediction</a></li>
+<li><a href="./autonomous-systems/RL/LRF/end-to-end%20nav%20strategy%20with%20DRL.html">End-to-End Navigation Strategy With Deep Reinforcement Learning for Mobile Robots</a></li>
+</ul>
+</li>
 </ul>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="planning-and-decision-making-for-autonomous-vehicles"><a class="header" href="#planning-and-decision-making-for-autonomous-vehicles">Planning and Decision-Making for Autonomous Vehicles</a></h1>
 <h2 id="1介绍"><a class="header" href="#1介绍">1.介绍</a></h2>
@@ -459,6 +500,108 @@ McAllister et al. (66)提出使用有原则的贝叶斯框架(a principled Bayes
 <h2 id="4behavior-aware-motion-planning"><a class="header" href="#4behavior-aware-motion-planning">4.BEHAVIOR-AWARE MOTION PLANNING</a></h2>
 <h2 id="5verification-and-synthesis"><a class="header" href="#5verification-and-synthesis">5.VERIFICATION AND SYNTHESIS</a></h2>
 <h2 id="6fleet-management"><a class="header" href="#6fleet-management">6.FLEET MANAGEMENT</a></h2>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="a-review-of-mobile-robot-motion-planning-methods-from-classical-motion-planning-workflows-to-reinforcement-learning-based-architectures"><a class="header" href="#a-review-of-mobile-robot-motion-planning-methods-from-classical-motion-planning-workflows-to-reinforcement-learning-based-architectures">A Review of Mobile Robot Motion Planning Methods: from Classical Motion Planning Workflows to Reinforcement Learning-based Architectures</a></h1>
+<p>主要分为三个部分：</p>
+<ul>
+<li>CLASSICAL MOTION PLANNING OF MRS</li>
+<li>RL-based motion planning approaches
+<ul>
+<li>MAP-BASED CLASSICAL MOTION PLANNING ALGORITHMS WITH RL OPTIMIZATION</li>
+<li>RL-BASED MAPLESS MOTION PLANNING METHODS</li>
+<li>RL-BASED MULTI-ROBOT MOTION PLANNING</li>
+</ul>
+</li>
+<li>DISCUSSION</li>
+</ul>
+<h2 id="classical-motion-planning-of-mrs"><a class="header" href="#classical-motion-planning-of-mrs">CLASSICAL MOTION PLANNING OF MRS</a></h2>
+<p>首先需要获取map representation of the environment，包括occupancy grid map, point cloud map, Voronoi diagram map, Euclidean signed distance fields.</p>
+<p>经典运动规划器的经典层次结构如下：</p>
+<p><img src="autonomous-systems/assets/1.png" alt="Fig.1 An overall architecture diagram of the classical motion planning workflow" /></p>
+<p>可以分成四个部分：discrete path searching, trajectory generation and optimization, trajectory tracking, and local planner.</p>
+<h3 id="discrete-path-searching"><a class="header" href="#discrete-path-searching">discrete path searching</a></h3>
+<p>传统全局DPS算法可以分为两类：the graph-searching-based algorithm (GSBA) and the sampling-based algorithm (SBA).</p>
+<h4 id="gsba"><a class="header" href="#gsba">GSBA</a></h4>
+<p>主要应用于低维空间上的路径规划问题.</p>
+<p>dfs, bfs.</p>
+<p>Dijkstra, A*.</p>
+<p>Dynamic A* (D*), Lifelong planning A* (LPA*), D* Lite.</p>
+<p>Jump point search (JPS), JPS+.</p>
+<p>都没考虑运动动力学，State lattice methods被提出来解决这个问题.</p>
+<h4 id="sba"><a class="header" href="#sba">SBA</a></h4>
+<p>更适合高维空间.</p>
+<p>Probabilistic road map (PRM), rapid-exploring random tree (RRT).</p>
+<p>RRT*, RRT*-smart, RRT#.</p>
+<p>fast match trees (FMT*).</p>
+<p>kino-dynamic RRT*, informed RRT*, batch informed trees (BIT*).</p>
+<p>Real-time RRT* (RT-RRT*), informationdriven RRT* (ID-RRT*).</p>
+<h3 id="trajectory-generation-and-optimization"><a class="header" href="#trajectory-generation-and-optimization">trajectory generation and optimization</a></h3>
+<p>大多数DPS算法只考虑工作空间的几何约束，在某些情况下，最终的最优或接近最优的分段轨迹对于实际的MR来说是不可执行的.</p>
+<p>轨迹生成和优化（TGO）过程考虑了机器人的多重约束（例如，安全约束、运动动力学约束等），并将时间分配机制(time-allocation mechanism)纳入规划过程中，以赋予运动规划器更多的可执行能力。</p>
+<h4 id="trajectory-generation"><a class="header" href="#trajectory-generation">trajectory generation</a></h4>
+<p>interpolation-curve-based method: good continuity and differentiability，典型的包括Reeds and Sheep (RS) curves, clothoid curves, polynomial curves, Bezier curves.</p>
+<h4 id="trajectory-optimization"><a class="header" href="#trajectory-optimization">trajectory optimization</a></h4>
+<p>minimum snap algorithm.</p>
+<p>EDF-based TGO method.</p>
+<h3 id="trajectory-tracking"><a class="header" href="#trajectory-tracking">trajectory tracking</a></h3>
+<p>使 MR 能够跟踪 TGO 流程规划的轨迹.</p>
+<h3 id="local-planner"><a class="header" href="#local-planner">local planner</a></h3>
+<p>MR需要具备局部重规划能力，以在跟踪全局轨迹的同时应对突发情况.</p>
+<p>artificial potential field, reactive replanning method, fuzzy algorithm based method.</p>
+<p>其中reactive replanning method 包括 directional approach, dynamic window approach (DWA).</p>
+<h2 id="map-based-classical-motion-planning-algorithms-with-rl-optimization"><a class="header" href="#map-based-classical-motion-planning-algorithms-with-rl-optimization">MAP-BASED CLASSICAL MOTION PLANNING ALGORITHMS WITH RL OPTIMIZATION</a></h2>
+<p>在上述传统架构中，规划架构的全局规划器和局部规划器是相互独立的，研究人员需要单独开发它们.此外，为了获得最终的可执行轨迹，研究人员必须解决具有多个约束的优化问题. 这个过程增加了规划方法的复杂性. 此外，经典的运动规划器包含各种子模块，每个子模块都需要繁琐的参数调整过程.</p>
+<p><img src="autonomous-systems/assets/2.png" alt="Fig 2. A summary diagram of RL-based motion planning algorithms for the single mobile robot operation. We mainly review two types of research methods: map-based motion planning methods with RL optimization (the left branch, part a.), and the map-free end-to-end RL-based motion planning methods (the right branch, part b.)." /></p>
+<h3 id="global-planners-combined-with-rl-improvements"><a class="header" href="#global-planners-combined-with-rl-improvements">Global Planners Combined with RL Improvements</a></h3>
+<p>approximate value iteration (AVI) RL-based motion planning architecture</p>
+<p>PRM-RL algorithm, RL-RRT, AutoRL-based PRM-RL.</p>
+<h3 id="local-planners-combined-with-rl-improvements"><a class="header" href="#local-planners-combined-with-rl-improvements">Local Planners Combined with RL Improvements</a></h3>
+<p>目的是让机器人在非结构化、动态和不确定的环境中具有更强的操作能力.</p>
+<p>hybrid DWA-RL.</p>
+<p>AHPF-RL.</p>
+<p>Q-learning-based DWA.</p>
+<p>soft actor-critic (SAC)-based local planner.</p>
+<h2 id="rl-based-mapless-motion-planning-methods"><a class="header" href="#rl-based-mapless-motion-planning-methods">RL-BASED MAPLESS MOTION PLANNING METHODS</a></h2>
+<p>在本节中，我们将审查的重点转移到基于端到端 RL 的运动规划方法，这些运动规划器是无地图的，实现了全局规划器和局部规划器的统一.</p>
+<p>可以分为agent-level methods, sensor-level methods两个部分.</p>
+<h3 id="agent-level-methods"><a class="header" href="#agent-level-methods">agent-level methods</a></h3>
+<p>agent-level methods基于预设的状态估计过程，可以直接获取环境的上层状态信息，更容易训练，这使得机器人能够更快地获得最优规划策略. agent-level methods的观测维度较低，包含更多有用信息，其状态可以等效于原始传感器数据的特征提取之后的输出. 更重要的是，agent-level methods的模拟器的开发难度要小得多. 然而，此类方法依赖于完美感知的假设，或者需要考虑观察编码问题，或者需要额外的通信机制来共享状态信息，这些限制限制了agent-level methods的可扩展性和应用.</p>
+<h3 id="sensor-level-methods"><a class="header" href="#sensor-level-methods">sensor-level methods</a></h3>
+<p>sensor-level methods是端到端的，直接建立从原始传感器数据到规划决策的非线性映射.</p>
+<p>根据主流研究趋势，以及常用的机器人感知方法，可以分为laser range finder (LRF) based methods 和 visual-based methods.</p>
+<h4 id="laser-range-finder-based"><a class="header" href="#laser-range-finder-based">Laser Range Finder based</a></h4>
+<p>intrinsic curiosity module</p>
+<p>D. Pathak, P. Agrawal, A. A. Efros, and T. Darrell, “Curiosity-driven exploration by self-supervised prediction,” in International Conference on Machine Learning. PMLR, 2017, pp. 2778–2787.</p>
+<p>H. Shi, L. Shi, M. Xu, and K.-S. Hwang, “End-to-end navigation strategy with deep reinforcement learning for mobile robots,” IEEE Transactions on Industrial Informatics, vol. 16, no. 4, pp. 2393–2402, 2019.</p>
+<p>Y. Wang, H. He, and C. Sun, “Learning to navigate through complex dynamic environment with modular deep reinforcement learning,” IEEE Transactions on Games, vol. 10, no. 4, pp. 400–412, 2018.</p>
+<p>EWC-DDPG.</p>
+<p>上述大多数运动规划器只能部署在数值模拟空间中，sim-to-real problem.</p>
+<p>asynchronous DDPG (ADDPG)-based motion planning algorithm.</p>
+<p>assisted-DDPG (AsDDPG).</p>
+<h4 id="vision-sensors"><a class="header" href="#vision-sensors">Vision sensors</a></h4>
+<p>NavA3C algorithm.</p>
+<p>DRL-based targetdriven visual navigation approach.</p>
+<h2 id="rl-based-multi-robot-motion-planning"><a class="header" href="#rl-based-multi-robot-motion-planning">RL-BASED MULTI-ROBOT MOTION PLANNING</a></h2>
+<h2 id="discussion"><a class="header" href="#discussion">DISCUSSION</a></h2>
+<h3 id="challenges"><a class="header" href="#challenges">Challenges</a></h3>
+<ul>
+<li>Reality Gap</li>
+<li>Sparse reward problem</li>
+<li>Generalization</li>
+<li>Low sample efficiency</li>
+<li>Social etiquette</li>
+<li>Lidar data pre-processing issues</li>
+<li>Catastrophic forgetting problem</li>
+</ul>
+<h3 id="future-directions"><a class="header" href="#future-directions">Future Directions</a></h3>
+<ul>
+<li>Task-free RL-based general motion planner</li>
+<li>Meta RL-based motion planning methods</li>
+<li>Multi-modal fusion based RL motion planning methods</li>
+<li>Multi-task objectives based RL motion planning methods</li>
+<li>Human-Machine interaction mode based motion planning methods</li>
+<li>RL-based motion planning of multiple heterogeneous MRs</li>
+<li>Multi-MR flexible formation planning methods</li>
+</ul>
 
                     </main>
 
