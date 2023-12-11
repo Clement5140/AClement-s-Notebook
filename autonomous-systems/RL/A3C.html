@@ -170,31 +170,31 @@
                     <main>
                         <h1 id="asynchronous-methods-for-deep-reinforcement-learning"><a class="header" href="#asynchronous-methods-for-deep-reinforcement-learning">Asynchronous Methods for Deep Reinforcement Learning</a></h1>
 <h2 id="reinforcement-learning-background"><a class="header" href="#reinforcement-learning-background">Reinforcement Learning Background</a></h2>
-<p>Environment $E$, time step $t$, state $s_t$, action $a_t$, possible actions $A$, policy $\pi$, scalar reward $r_t$.</p>
-<p>Return $R_t = \sum_{k=0}^\infty \gamma^k r_{t+k}, \gamma \in (0, 1]$.</p>
-<p>Action value $Q^\pi(s, a) = \mathbb{E}[R_t | s_t = s, a]$ (expected return).</p>
-<p>Optimal action value function $Q^*(s, a) = \max_\pi Q^\pi(s, a)$.</p>
-<p>State value $V^\pi(s) = \mathbb{E}[R_t | s_t = s] = \sum_{a \in A} \pi(a | s) · Q^\pi(s, a)$.</p>
+<p>Environment \(E\), time step \(t\), state \(s_t\), action \(a_t\), possible actions \(A\), policy \(\pi\), scalar reward \(r_t\).</p>
+<p>Return \(R_t = \sum_{k=0}^\infty \gamma^k r_{t+k}, \gamma \in (0, 1]\).</p>
+<p>Action value \(Q^\pi(s, a) = \mathbb{E}[R_t | s_t = s, a]\) (expected return).</p>
+<p>Optimal action value function \(Q^*(s, a) = \max_\pi Q^\pi(s, a)\).</p>
+<p>State value \(V^\pi(s) = \mathbb{E}[R_t | s_t = s] = \sum_{a \in A} \pi(a | s) · Q^\pi(s, a)\).</p>
 <h2 id="value-based-method-q-learning"><a class="header" href="#value-based-method-q-learning">value-based method (Q-learning)</a></h2>
-<p>$Q(s, a ; \theta) \approx Q^*(s, a)$.</p>
-<p>The $i$th loss function:</p>
+<p>\(Q(s, a ; \theta) \approx Q^*(s, a)\).</p>
+<p>The \(i\)th loss function:</p>
 <p>$$
 L_i(\theta_i) = \mathbb{E}(r + \gamma \max_{a'} Q(s', a' ; \theta{i-1}) - Q(s, a ; \theta)) ^ 2
 $$</p>
-<p>where $s'$ is the state encountered after state $s$.</p>
+<p>where \(s'\) is the state encountered after state \(s\).</p>
 <p>One-step Q-learning.</p>
 <h2 id="policy-based-methods"><a class="header" href="#policy-based-methods">policy-based methods</a></h2>
-<p>$\pi(a | s ; \theta)$.</p>
-<p>Update the parameters $\theta$ by performing, typically approximate, gradient ascent on $E[R_t]$.</p>
+<p>\(\pi(a | s ; \theta)\).</p>
+<p>Update the parameters \(\theta\) by performing, typically approximate, gradient ascent on \(E[R_t]\).</p>
 <p>REINFORCE:</p>
 <ul>
-<li>Updates the policy parameters $\theta$ in the direction $\nabla_\theta \log \pi(a_t | s_t ; \theta) R_t$ which is an unbiased estimate of $\nabla_\theta \mathbb{E} [R_t]$.</li>
-<li>Reduce the variance of this estimate while keeping it unbiased by subtracting a learned function of the state $b_t(s_t)$, known as a baseline (Williams, 1992), from the return. Resulting gradient: $\nabla_\theta \log \pi(a_t | s_t ; \theta) (R_t - b_t(s_t))$.</li>
+<li>Updates the policy parameters \(\theta\) in the direction \(\nabla_\theta \log \pi(a_t | s_t ; \theta) R_t\) which is an unbiased estimate of \(\nabla_\theta \mathbb{E} [R_t]\).</li>
+<li>Reduce the variance of this estimate while keeping it unbiased by subtracting a learned function of the state \(b_t(s_t)\), known as a baseline (Williams, 1992), from the return. Resulting gradient: \(\nabla_\theta \log \pi(a_t | s_t ; \theta) (R_t - b_t(s_t))\).</li>
 </ul>
 <p>Actor-critic:</p>
 <ul>
-<li>A learned estimate of the value function is commonly used as the baseline $b_t(s_t) \approx V^\pi(s_t)$ leading to a much lower variance estimate of the policy gradient.</li>
-<li>The quantity $R_t − b_t$ used to scale the policy gradient can be seen as an estimate of the <em>advantage</em> of action at in state $s_t$, or $A(a_t, s_t) = Q(a_t, s_t)−V(s_t)$.</li>
+<li>A learned estimate of the value function is commonly used as the baseline \(b_t(s_t) \approx V^\pi(s_t)\) leading to a much lower variance estimate of the policy gradient.</li>
+<li>The quantity \(R_t − b_t\) used to scale the policy gradient can be seen as an estimate of the <em>advantage</em> of action at in state \(s_t\), or \(A(a_t, s_t) = Q(a_t, s_t)−V(s_t)\).</li>
 </ul>
 <h2 id="asynchronous-rl-framework"><a class="header" href="#asynchronous-rl-framework">Asynchronous RL Framework</a></h2>
 <p>First, asynchronous actor-learners, multiple CPU threads on a single machine.</p>
@@ -208,11 +208,11 @@ $$</p>
 <h3 id="asynchronous-onestep-q-learning"><a class="header" href="#asynchronous-onestep-q-learning">Asynchronous onestep Q-learning</a></h3>
 <p><img src="assets/a3c-1.png" alt="Fig 1." /></p>
 <h3 id="asynchronous-one-step-sarsa"><a class="header" href="#asynchronous-one-step-sarsa">Asynchronous one-step Sarsa</a></h3>
-<p>Same as asynchronous one-step Q-learning except that it uses a different target value for $Q(s, a)$ : $r + \gamma Q(s', a' ; \theta^-)$.</p>
+<p>Same as asynchronous one-step Q-learning except that it uses a different target value for \(Q(s, a)\) : \(r + \gamma Q(s', a' ; \theta^-)\).</p>
 <h3 id="asynchronous-n-step-q-learning"><a class="header" href="#asynchronous-n-step-q-learning">Asynchronous n-step Q-learning</a></h3>
 <p><img src="assets/a3c-2.png" alt="Fig 2." /></p>
 <h3 id="asynchronous-advantage-actor-critic-a3c"><a class="header" href="#asynchronous-advantage-actor-critic-a3c">Asynchronous advantage actor-critic (A3C)</a></h3>
-<p>A3C maintains a policy $\pi(a_t|s_t; \theta)$ and an estimate of the value function $V(s_t; \theta_v)$.</p>
+<p>A3C maintains a policy \(\pi(a_t|s_t; \theta)\) and an estimate of the value function \(V(s_t; \theta_v)\).</p>
 <p>Like the variant of n-step Q-learning, the variant of actor-critic also operates in the forward view and uses the same mix of n-step returns to update both the policy and the value-function.</p>
 <p><img src="assets/a3c-3.png" alt="Fig 3." /></p>
 

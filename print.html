@@ -588,31 +588,31 @@ McAllister et al. (66)提出使用有原则的贝叶斯框架(a principled Bayes
 <p>Reinforcement learning.</p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="asynchronous-methods-for-deep-reinforcement-learning"><a class="header" href="#asynchronous-methods-for-deep-reinforcement-learning">Asynchronous Methods for Deep Reinforcement Learning</a></h1>
 <h2 id="reinforcement-learning-background"><a class="header" href="#reinforcement-learning-background">Reinforcement Learning Background</a></h2>
-<p>Environment $E$, time step $t$, state $s_t$, action $a_t$, possible actions $A$, policy $\pi$, scalar reward $r_t$.</p>
-<p>Return $R_t = \sum_{k=0}^\infty \gamma^k r_{t+k}, \gamma \in (0, 1]$.</p>
-<p>Action value $Q^\pi(s, a) = \mathbb{E}[R_t | s_t = s, a]$ (expected return).</p>
-<p>Optimal action value function $Q^*(s, a) = \max_\pi Q^\pi(s, a)$.</p>
-<p>State value $V^\pi(s) = \mathbb{E}[R_t | s_t = s] = \sum_{a \in A} \pi(a | s) · Q^\pi(s, a)$.</p>
+<p>Environment \(E\), time step \(t\), state \(s_t\), action \(a_t\), possible actions \(A\), policy \(\pi\), scalar reward \(r_t\).</p>
+<p>Return \(R_t = \sum_{k=0}^\infty \gamma^k r_{t+k}, \gamma \in (0, 1]\).</p>
+<p>Action value \(Q^\pi(s, a) = \mathbb{E}[R_t | s_t = s, a]\) (expected return).</p>
+<p>Optimal action value function \(Q^*(s, a) = \max_\pi Q^\pi(s, a)\).</p>
+<p>State value \(V^\pi(s) = \mathbb{E}[R_t | s_t = s] = \sum_{a \in A} \pi(a | s) · Q^\pi(s, a)\).</p>
 <h2 id="value-based-method-q-learning"><a class="header" href="#value-based-method-q-learning">value-based method (Q-learning)</a></h2>
-<p>$Q(s, a ; \theta) \approx Q^*(s, a)$.</p>
-<p>The $i$th loss function:</p>
+<p>\(Q(s, a ; \theta) \approx Q^*(s, a)\).</p>
+<p>The \(i\)th loss function:</p>
 <p>$$
 L_i(\theta_i) = \mathbb{E}(r + \gamma \max_{a'} Q(s', a' ; \theta{i-1}) - Q(s, a ; \theta)) ^ 2
 $$</p>
-<p>where $s'$ is the state encountered after state $s$.</p>
+<p>where \(s'\) is the state encountered after state \(s\).</p>
 <p>One-step Q-learning.</p>
 <h2 id="policy-based-methods"><a class="header" href="#policy-based-methods">policy-based methods</a></h2>
-<p>$\pi(a | s ; \theta)$.</p>
-<p>Update the parameters $\theta$ by performing, typically approximate, gradient ascent on $E[R_t]$.</p>
+<p>\(\pi(a | s ; \theta)\).</p>
+<p>Update the parameters \(\theta\) by performing, typically approximate, gradient ascent on \(E[R_t]\).</p>
 <p>REINFORCE:</p>
 <ul>
-<li>Updates the policy parameters $\theta$ in the direction $\nabla_\theta \log \pi(a_t | s_t ; \theta) R_t$ which is an unbiased estimate of $\nabla_\theta \mathbb{E} [R_t]$.</li>
-<li>Reduce the variance of this estimate while keeping it unbiased by subtracting a learned function of the state $b_t(s_t)$, known as a baseline (Williams, 1992), from the return. Resulting gradient: $\nabla_\theta \log \pi(a_t | s_t ; \theta) (R_t - b_t(s_t))$.</li>
+<li>Updates the policy parameters \(\theta\) in the direction \(\nabla_\theta \log \pi(a_t | s_t ; \theta) R_t\) which is an unbiased estimate of \(\nabla_\theta \mathbb{E} [R_t]\).</li>
+<li>Reduce the variance of this estimate while keeping it unbiased by subtracting a learned function of the state \(b_t(s_t)\), known as a baseline (Williams, 1992), from the return. Resulting gradient: \(\nabla_\theta \log \pi(a_t | s_t ; \theta) (R_t - b_t(s_t))\).</li>
 </ul>
 <p>Actor-critic:</p>
 <ul>
-<li>A learned estimate of the value function is commonly used as the baseline $b_t(s_t) \approx V^\pi(s_t)$ leading to a much lower variance estimate of the policy gradient.</li>
-<li>The quantity $R_t − b_t$ used to scale the policy gradient can be seen as an estimate of the <em>advantage</em> of action at in state $s_t$, or $A(a_t, s_t) = Q(a_t, s_t)−V(s_t)$.</li>
+<li>A learned estimate of the value function is commonly used as the baseline \(b_t(s_t) \approx V^\pi(s_t)\) leading to a much lower variance estimate of the policy gradient.</li>
+<li>The quantity \(R_t − b_t\) used to scale the policy gradient can be seen as an estimate of the <em>advantage</em> of action at in state \(s_t\), or \(A(a_t, s_t) = Q(a_t, s_t)−V(s_t)\).</li>
 </ul>
 <h2 id="asynchronous-rl-framework"><a class="header" href="#asynchronous-rl-framework">Asynchronous RL Framework</a></h2>
 <p>First, asynchronous actor-learners, multiple CPU threads on a single machine.</p>
@@ -626,11 +626,11 @@ $$</p>
 <h3 id="asynchronous-onestep-q-learning"><a class="header" href="#asynchronous-onestep-q-learning">Asynchronous onestep Q-learning</a></h3>
 <p><img src="autonomous-systems/RL/assets/a3c-1.png" alt="Fig 1." /></p>
 <h3 id="asynchronous-one-step-sarsa"><a class="header" href="#asynchronous-one-step-sarsa">Asynchronous one-step Sarsa</a></h3>
-<p>Same as asynchronous one-step Q-learning except that it uses a different target value for $Q(s, a)$ : $r + \gamma Q(s', a' ; \theta^-)$.</p>
+<p>Same as asynchronous one-step Q-learning except that it uses a different target value for \(Q(s, a)\) : \(r + \gamma Q(s', a' ; \theta^-)\).</p>
 <h3 id="asynchronous-n-step-q-learning"><a class="header" href="#asynchronous-n-step-q-learning">Asynchronous n-step Q-learning</a></h3>
 <p><img src="autonomous-systems/RL/assets/a3c-2.png" alt="Fig 2." /></p>
 <h3 id="asynchronous-advantage-actor-critic-a3c"><a class="header" href="#asynchronous-advantage-actor-critic-a3c">Asynchronous advantage actor-critic (A3C)</a></h3>
-<p>A3C maintains a policy $\pi(a_t|s_t; \theta)$ and an estimate of the value function $V(s_t; \theta_v)$.</p>
+<p>A3C maintains a policy \(\pi(a_t|s_t; \theta)\) and an estimate of the value function \(V(s_t; \theta_v)\).</p>
 <p>Like the variant of n-step Q-learning, the variant of actor-critic also operates in the forward view and uses the same mix of n-step returns to update both the policy and the value-function.</p>
 <p><img src="autonomous-systems/RL/assets/a3c-3.png" alt="Fig 3." /></p>
 <div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="curiosity-driven-exploration-by-self-supervised-prediction"><a class="header" href="#curiosity-driven-exploration-by-self-supervised-prediction">Curiosity-driven Exploration by Self-supervised Prediction</a></h1>
@@ -648,10 +648,10 @@ $$</p>
 <li>learn skills that might be helpful in future scenarios</li>
 </ul>
 <h2 id="curiosity-driven-exploration"><a class="header" href="#curiosity-driven-exploration">Curiosity-Driven Exploration</a></h2>
-<p>Intrinsic curiosity reward generated by the agent at time t: $r_t^i$, extrinsic reward: $r_t^e$, sum: $r_t = r_t^i + r_t^e$, with $r_t^e$ mostly zero.</p>
-<p>Policy: $\pi(s_t ; \theta_P)$ by a deep neural network with parameters $\theta_P$.</p>
-<p>Given the agent in state $s_t$, it executes the action $a_t \sim \pi(s_t ; \theta_P)$.</p>
-<p>$\theta_P$ is optimized to maximize the expected sum of rewards:</p>
+<p>Intrinsic curiosity reward generated by the agent at time t: \(r_t^i\), extrinsic reward: \(r_t^e\), sum: \(r_t = r_t^i + r_t^e\), with \(r_t^e\) mostly zero.</p>
+<p>Policy: \(\pi(s_t ; \theta_P)\) by a deep neural network with parameters \(\theta_P\).</p>
+<p>Given the agent in state \(s_t\), it executes the action \(a_t \sim \pi(s_t ; \theta_P)\).</p>
+<p>\(\theta_P\) is optimized to maximize the expected sum of rewards:</p>
 <p>$$
 \max_{\theta_P} \mathbb{E}_{\pi(s_t ; \theta_P)} [\Sigma_t r_t]
 $$</p>
@@ -669,27 +669,27 @@ $$</p>
 <p>A general mechanism for learning feature representations such that the prediction error in the learned feature space provides a good intrinsic reward signal.</p>
 <p>Train a deep neural network with two sub-modules:</p>
 <ul>
-<li>the first submodule encodes the raw state $(s_t)$ into a feature vector $\phi(s_t)$.</li>
-<li>the second submodule takes as inputs the feature encoding $\phi(s_t), \phi(s_{t+1})$ of two consequent states and predicts the action $(a_t)$ taken by the agent to move from state $s_t$ to $s_{t+1}$.</li>
+<li>the first submodule encodes the raw state \((s_t)\) into a feature vector \(\phi(s_t)\).</li>
+<li>the second submodule takes as inputs the feature encoding \(\phi(s_t), \phi(s_{t+1})\) of two consequent states and predicts the action \((a_t)\) taken by the agent to move from state \(s_t\) to \(s_{t+1}\).</li>
 </ul>
-<p>Training this neural network amounts to learning function $g$ defined as:</p>
+<p>Training this neural network amounts to learning function \(g\) defined as:</p>
 <p>$$
 \hat{a}<em>t = g(s_t, s</em>{t+1} ; \theta_I)
 $$</p>
-<p>The neural network parameters $\theta_I$ are trained to optimize:</p>
+<p>The neural network parameters \(\theta_I\) are trained to optimize:</p>
 <p>$$
 \min_{\theta_I} L_I(\hat{a}<em>t, a_t)
 $$
-The learned function $g$ is also known as the <strong>inverse dynamics model</strong> and the tuple $(s_t, a_t, s</em>{t+1})$ required to learn $g$ is obtained while the agent interacts with the environment using its current policy $\pi(s)$.</p>
+The learned function \(g\) is also known as the <strong>inverse dynamics model</strong> and the tuple \((s_t, a_t, s</em>{t+1})\) required to learn \(g\) is obtained while the agent interacts with the environment using its current policy \(\pi(s)\).</p>
 <p>Train another neural network:</p>
 <p>$$
 \hat{\phi}(s_{t+1}) = f(\phi(s_t), a_t ; \theta_F)
 $$</p>
-<p>The neural network parameters $\theta_F$ are optimized by minimizing the loss function $L_F$:</p>
+<p>The neural network parameters \(\theta_F\) are optimized by minimizing the loss function \(L_F\):</p>
 <p>$$
 L_F(\phi(s_t), \hat{\phi}(s_{t+1})) = \frac{1}{2} \parallel \hat{\phi}(s_{t+1}) - \phi(s_{t+1}) \parallel _2^2
 $$</p>
-<p>The learned function $f$ is also known as the <strong>forward dynamics model</strong>.</p>
+<p>The learned function \(f\) is also known as the <strong>forward dynamics model</strong>.</p>
 <p>The intrinsic reward signal is computed as:</p>
 <p>$$
 r_t^i = \frac{\eta}{2} \parallel \hat{\phi}(s_{t+1}) - \phi(s_{t+1}) \parallel _2^2
@@ -705,23 +705,23 @@ $$</p>
 <p>A motion planning model based on DRL. This end-to-end model transfers directly the inputs of the sensor observations and the relative position of the target to the commands of robot’s movement.</p>
 <p>Uses <em>intrinsic curiosity</em> to allow agents to explore the environment more effectively and as an additional reward in an environment where the rewards are sparse. <em>Sparse laser ranging results</em> are also used as the highly abstracted inputs, so agent strategies that are learned by the simulation are effective in the real world.</p>
 <h2 id="curiosity-driven-exploration-1"><a class="header" href="#curiosity-driven-exploration-1">Curiosity-Driven Exploration</a></h2>
-<p>The original states $(s_t,s_{t+1})$ are encoded into the corresponding features $(\phi(s_t), \phi(s_{t+1}))$.</p>
-<p>The inverse model is trained to predict at using state features $(\phi(s_t),\phi(s_{t+1}))$. </p>
-<p>$a_t$ and $\phi(s_t)$ are passed to the forward model, which is used to predict the feature representation $\phi(s_{t+1})$ for the state $(s_{t+1})$ and compare it with the real feature $(\phi(s_t))$.</p>
-<p>For the inverse model, the goal is to learn the function $g$ as follows:</p>
+<p>The original states \((s_t,s_{t+1})\) are encoded into the corresponding features \((\phi(s_t), \phi(s_{t+1}))\).</p>
+<p>The inverse model is trained to predict at using state features \((\phi(s_t),\phi(s_{t+1}))\). </p>
+<p>\(a_t\) and \(\phi(s_t)\) are passed to the forward model, which is used to predict the feature representation \(\phi(s_{t+1})\) for the state \((s_{t+1})\) and compare it with the real feature \((\phi(s_t))\).</p>
+<p>For the inverse model, the goal is to learn the function \(g\) as follows:</p>
 <p>$$
 \hat{a}<em>t = g(s_t, s</em>{t+1} ; \theta_I)
 $$</p>
-<p>where $\hat{a}_t$ is the predicted value of the agent’s action $(a_t)$ and $\theta_I$ is the neural network parameter that is trained to be optimized as follows:</p>
+<p>where \(\hat{a}_t\) is the predicted value of the agent’s action \((a_t)\) and \(\theta_I\) is the neural network parameter that is trained to be optimized as follows:</p>
 <p>$$
 \min_{\theta_I} L_I(\hat{a}_t, a_t)
 $$</p>
-<p>Since the action space is discrete, the output of $g$ is a soft-max distribution across all possible actions. </p>
-<p>The loss function $L_I$ is set in the form of cross entropy as follows:</p>
+<p>Since the action space is discrete, the output of \(g\) is a soft-max distribution across all possible actions. </p>
+<p>The loss function \(L_I\) is set in the form of cross entropy as follows:</p>
 <p>$$
 L_I(\hat{a}<em>t, a_t) = \sum</em>{i=1}^n -P(a_{t_i}) \ln q(\hat{a}_{t_i})
 $$</p>
-<p>where $n$ is the size of the action space, $P(a_{t_i})$ is whether the agent chooses the $i$th action in the actual situation, and $q(\hat{a}_{t_i})$ is the probability of the agent choosing the $i$th action in the prediction result.</p>
+<p>where \(n\) is the size of the action space, \(P(a_{t_i})\) is whether the agent chooses the \(i\)th action in the actual situation, and \(q(\hat{a}_{t_i})\) is the probability of the agent choosing the \(i\)th action in the prediction result.</p>
 <p>Another neural network is trained for the forward model:</p>
 <p>$$
 \hat{\phi}(s_{t+1}) = f(\phi(s_t), a_t, \theta_F)
@@ -730,24 +730,24 @@ $$</p>
 <p>$$
 L_F(\phi(s_t), \hat{\phi}(s_{t+1})) = \frac{1}{2} \parallel \hat{\phi}(s_{t+1}) - \phi(s_{t+1}) \parallel _2^2
 $$</p>
-<p>The intrinsic reward signal $r_t^i$ measured by the prediction error of the feature encoding is calculated as:</p>
+<p>The intrinsic reward signal \(r_t^i\) measured by the prediction error of the feature encoding is calculated as:</p>
 <p>$$
 r_t^i = \frac{\eta}{2} \parallel \hat{\phi}(s_{t+1}) - \phi(s_{t+1}) \parallel _2^2
 $$</p>
-<p>where $\eta &gt; 0$ is the scale factor used to adjust the intrinsic reward.</p>
+<p>where \(\eta &gt; 0\) is the scale factor used to adjust the intrinsic reward.</p>
 <p><img src="autonomous-systems/RL/LRF/assets/navDRL-1.png" alt="Fig 1." /></p>
 <h2 id="navigation-strategy-based-on-drl"><a class="header" href="#navigation-strategy-based-on-drl">Navigation Strategy Based on DRL</a></h2>
 <p><img src="autonomous-systems/RL/LRF/assets/navDRL-2.png" alt="Fig 2." /></p>
 <p>The first layer of LSTM accepts the previous rewards and observations. The aim is to establish an association between the original observations and rewards and transmit this to the next level of LSTM. The previous action is passed directly to the LSTM of the second layer.</p>
-<p>Finally, connected to two separate output layers including softmax layer and linear layer, respectively, generating policy $\pi$ and value function $V$.</p>
-<p>The reward function is divided into two components: the agent interacting with the environment obtains the extrinsic reward $r_t^e$ and the intrinsic reward $r_t^i$.</p>
-<p>The policy $\pi(s_t ; \theta_p)$ is represented by a deep neural network with the parameter $\theta_p$.</p>
-<p>Sum of the intrinsic reward: $r_t = r_t^e + r_t^i$.</p>
+<p>Finally, connected to two separate output layers including softmax layer and linear layer, respectively, generating policy \(\pi\) and value function \(V\).</p>
+<p>The reward function is divided into two components: the agent interacting with the environment obtains the extrinsic reward \(r_t^e\) and the intrinsic reward \(r_t^i\).</p>
+<p>The policy \(\pi(s_t ; \theta_p)\) is represented by a deep neural network with the parameter \(\theta_p\).</p>
+<p>Sum of the intrinsic reward: \(r_t = r_t^e + r_t^i\).</p>
 <p>The problem that needs to be optimized overall:</p>
 <p>$$
 \min_{\theta_p, \theta_I, \theta_F} \Big [-\lambda \mathbb{E}_{\pi(s_t ; \theta_p)}\big [ \sum_t r_t \big ] + (1-\beta) L_I + \beta L_F \Big ]
 $$</p>
-<p>where $\lambda &gt; 0$ is used to adjust the weight of the policy gradient loss for the curiosity reward, and $0 \leq \beta \leq 1$ is used to adjust the weight between the forward model loss and the inverse model loss.</p>
+<p>where \(\lambda &gt; 0\) is used to adjust the weight of the policy gradient loss for the curiosity reward, and \(0 \leq \beta \leq 1\) is used to adjust the weight between the forward model loss and the inverse model loss.</p>
 
                     </main>
 
