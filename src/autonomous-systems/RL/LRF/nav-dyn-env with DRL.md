@@ -32,7 +32,7 @@ Divide and conquer strategy, divide the main navigation task into two subtasks: 
 
 The simulated environment is formalized as a Markov Decision Process (MDP) described by a 4-tuple \\(S, A, P, R\\).
 
-Time step \\(t\\), state \\(s_t \in S\\), action \\(a_t \in A \\), policy \\(\pi\\), reward \\(r_t \sim R(s_t, a_t)\\), new state \\(s_{t+1} = P(s_t, a_t)\\), return \\(R_t = \sum_{t'=t}^T \gamma^{t'-t}r_t^', \gamma in [0, 1]\\).
+Time step \\(t\\), state \\(s_t \in S\\), action \\(a_t \in A \\), policy \\(\pi\\), reward \\(r_t \sim R(s_t, a_t)\\), new state \\(s_{t+1} = P(s_t, a_t)\\), return \\(R_t = \sum_{t'=t}^T \gamma^{t'-t} r_t^', \gamma \in [0, 1]\\).
 
 Action-value function or Q-function: \\(Q^\pi(s, a) = \mathbb{E}[R_t | s_t=s, a_t=a]\\).
 
@@ -64,7 +64,10 @@ Two main techniques are employed:
 The weights of the main network at training iteration i are updated by minimizing the loss function:
 
 $$
-L_i(\theta_i) = \mathbb{E}_{e \sim D} [(y_i - Q^{\theta_i}(s_t, a_t))^2], \\
+L_i(\theta_i) = \mathbb{E}_{e \sim D} [(y_i - Q^{\theta_i}(s_t, a_t))^2]
+$$
+
+$$
 y_i = r + \gamma \hat{Q}^{\theta^-}(s_{t+1}, \argmax_{a'} Q^{\theta_i}(s_{t+1}, a'))
 $$
 
@@ -73,7 +76,10 @@ $$
 The update is performed by gradient descent:
 
 $$
-\nabla_{\theta_i}L_i(\theta_i) = \mathbb{E}_{e \sim D} [(y_i - Q^{\theta_i}(s_t, a_t)) \nabla_{\theta_i} Q^{\theta_i}(s_t, a_t)], \\
+\nabla_{\theta_i}L_i(\theta_i) = \mathbb{E}_{e \sim D} [(y_i - Q^{\theta_i}(s_t, a_t)) \nabla_{\theta_i} Q^{\theta_i}(s_t, a_t)]
+$$
+
+$$
 \theta_{i+1} \leftarrow \theta_i - \alpha \nabla_{\theta_i}L_i(\theta_i)
 $$
 
