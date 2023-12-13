@@ -14,3 +14,4 @@
     - [Asynchronous Methods for Deep Reinforcement Learning (A3C)](./autonomous-systems/RL/A3C.md)
     - [Curiosity-driven Exploration by Self-supervised Prediction](./autonomous-systems/RL/LRF/curiosity-driven.md)
     - [End-to-End Navigation Strategy With Deep Reinforcement Learning for Mobile Robots](./autonomous-systems/RL/LRF/end-to-end%20nav%20strategy%20with%20DRL.md)
+    - [Learning to Navigate Through Complex Dynamic Environment With Modular Deep Reinforcement Learning](./autonomous-systems/RL/LRF/nav-dyn-env%20with%20DRL.md)
