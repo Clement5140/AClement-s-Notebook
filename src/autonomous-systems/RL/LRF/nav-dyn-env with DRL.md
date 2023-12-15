@@ -32,7 +32,7 @@ Divide and conquer strategy, divide the main navigation task into two subtasks: 
 
 The simulated environment is formalized as a Markov Decision Process (MDP) described by a 4-tuple \\(S, A, P, R\\).
 
-Time step \\(t\\), state \\(s_t \in S\\), action \\(a_t \in A \\), policy \\(\pi\\), reward \\(r_t \sim R(s_t, a_t)\\), new state \\(s_{t+1} = P(s_t, a_t)\\), return \\(R_t = \sum_{t'=t}^T \gamma^{t'-t} r_t^', \gamma \in [0, 1]\\).
+Time step \\(t\\), state \\(s_t \in S\\), action \\(a_t \in A \\), policy \\(\pi\\), reward \\(r_t \sim R(s_t, a_t)\\), new state \\(s_{t+1} = P(s_t, a_t)\\), return \\(R_t = \sum_{t'=t}^T \gamma^{t'-t} r_t', \gamma \in [0, 1]\\).
 
 Action-value function or Q-function: \\(Q^\pi(s, a) = \mathbb{E}[R_t | s_t=s, a_t=a]\\).
 
