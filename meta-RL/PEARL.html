@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="../favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="../favicon.png">
+        
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+        <!-- MathJax -->
+        <script async type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../meta-learning/index.html"><strong aria-hidden="true">1.</strong> Meta-Learning</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../meta-learning/MAML.html"><strong aria-hidden="true">1.1.</strong> Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</a></li><li class="chapter-item expanded "><a href="../meta-learning/MAML++.html"><strong aria-hidden="true">1.2.</strong> HOW TO TRAIN YOUR MAML</a></li><li class="chapter-item expanded "><a href="../meta-learning/ANIL.html"><strong aria-hidden="true">1.3.</strong> RAPID LEARNING OR FEATURE REUSE? TOWARDS UNDERSTANDING THE EFFECTIVENESS OF MAML</a></li><li class="chapter-item expanded "><a href="../meta-learning/FO-MAML.html"><strong aria-hidden="true">1.4.</strong> On First-Order Meta-Learning Algorithms</a></li><li class="chapter-item expanded "><a href="../meta-learning/HF-MAML.html"><strong aria-hidden="true">1.5.</strong> On the Convergence Theory of Gradient-Based Model-Agnostic Meta-Learning Algorithms</a></li><li class="chapter-item expanded "><a href="../meta-learning/iMAML.html"><strong aria-hidden="true">1.6.</strong> Meta-Learning with Implicit Gradients</a></li></ol></li><li class="chapter-item expanded "><a href="../meta-RL/index.html"><strong aria-hidden="true">2.</strong> Meta-RL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../meta-RL/MAESN.html"><strong aria-hidden="true">2.1.</strong> Meta-Reinforcement Learning of Structured Exploration Strategies</a></li><li class="chapter-item expanded "><a href="../meta-RL/PEARL.html" class="active"><strong aria-hidden="true">2.2.</strong> Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables</a></li></ol></li><li class="chapter-item expanded "><a href="../autonomous-systems/index.html"><strong aria-hidden="true">3.</strong> Autonomous Systems</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../autonomous-systems/planning&decision-making.html"><strong aria-hidden="true">3.1.</strong> [review]Planning and Decision-Making for Autonomous Vehicles</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/motion-planning-review.html"><strong aria-hidden="true">3.2.</strong> [review]A Review of Mobile Robot Motion Planning Methods</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/RL/index.html"><strong aria-hidden="true">3.3.</strong> RL</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../autonomous-systems/RL/A3C.html"><strong aria-hidden="true">3.3.1.</strong> Asynchronous Methods for Deep Reinforcement Learning (A3C)</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/RL/nav-in-complex-env.html"><strong aria-hidden="true">3.3.2.</strong> LEARNING TO NAVIGATE IN COMPLEX ENVIRONMENTS</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/RL/LRF/curiosity-driven.html"><strong aria-hidden="true">3.3.3.</strong> Curiosity-driven Exploration by Self-supervised Prediction</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/RL/LRF/end-to-end nav strategy with DRL.html"><strong aria-hidden="true">3.3.4.</strong> End-to-End Navigation Strategy With Deep Reinforcement Learning for Mobile Robots</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/RL/nav-in-complex-env.html"><strong aria-hidden="true">3.3.5.</strong> LEARNING TO NAVIGATE IN COMPLEX ENVIRONMENTS</a></li><li class="chapter-item expanded "><a href="../autonomous-systems/RL/LRF/nav-dyn-env with DRL.html"><strong aria-hidden="true">3.3.6.</strong> Learning to Navigate Through Complex Dynamic Environment With Modular Deep Reinforcement Learning</a></li></ol></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="efficient-off-policy-meta-reinforcement-learning-via-probabilistic-context-variables"><a class="header" href="#efficient-off-policy-meta-reinforcement-learning-via-probabilistic-context-variables">Efficient Off-Policy Meta-Reinforcement Learning via Probabilistic Context Variables</a></h1>
+<p>Most current meta-RL methods require on-policy data during both meta-training and adaptation, which makes them exceedingly inefficient during meta-training.</p>
+<p>Meta-learning typically operates on the principle that <strong>meta-training time should match meta-test time</strong> - for example, an image classification meta-learner tested on classifying images from five examples should be meta-trained to take in sets of five examples and produce accurate predictions (Vinyals et al., 2016). This makes it inherently difficult to meta-train a policy to adapt using off-policy data, which is <strong>systematically different from the data the policy would see when it explores (on-policy)</strong> in a new task at meta-test time.</p>
+<p>To achieve both meta-training efficiency and rapid adaptation, we propose an approach that integrates <strong>online inference of probabilistic context variables</strong> with existing off-policy RL algorithms.</p>
+<p><strong><em>Context-based</em> meta-RL methods</strong>.</p>
+<p>Probabilistic meta-learning.</p>
+<p>Posterior sampling.</p>
+<p>Partially observed MDPs.</p>
+<h2 id="problem-statement"><a class="header" href="#problem-statement">Problem Statement</a></h2>
+<p>Assume a distribution of tasks \(p(T)\), where each task is a Markov decision process (MDP).</p>
+<p>Assume that the transition and reward functions are <strong>unknown</strong>, but can be sampled by taking actions in the environment.</p>
+<p>Formally, a task \(T = {p(s_0), p(s_{t+1} | s_t, a_t), r(s_t, a_t)}\), initial state distribution \(p(s_0)\), transition distribution \(p(s_{t+1} | s_t, a_t)\), reward function \(r(s_t, a_t)\).</p>
+<p>Given a set of training tasks sampled from \(p(T)\), the meta-training process learns a policy that adapts to the task at hand by conditioning on the history of past transitions, which we refer to as <em>context</em> \(c\).</p>
+<p>Let \(c_n^T = (s_n, a_n, r_n, s_n')\) be one transition in the task \(T\) so that \(c_{1:N}^T\) comprises the experience collected so far.</p>
+<p>At test-time, the policy must adapt to a new task drawn from \(p(T)\).</p>
+<h2 id="probabilistic-latent-context"><a class="header" href="#probabilistic-latent-context">Probabilistic Latent Context</a></h2>
+<p>We capture knowledge about how the current task should be performed in a latent probabilistic context variable \(Z\), on which we condition the policy as \(\pi_\theta(a | s, z)\) in order to adapt its behavior to the task.</p>
+<h3 id="modeling-and-learning-latent-contexts"><a class="header" href="#modeling-and-learning-latent-contexts">Modeling and Learning Latent Contexts</a></h3>
+<p>amortized variational inference</p>
+<p>Train an <em>inference network</em> \(q_\phi(z | c)\), that estimates the posterior \(p(z | c)\).</p>
+<p>\(q_\phi(z | c)\) can be optimized in a model-free manner to model the state-action value functions or to maximize returns through the policy over the distribution of tasks. Assuming this objective to be a log-likelihood, the resulting variational lower bound is:</p>
+<p>$$
+\mathbb{E}<em>T[\mathbb{E}</em>{z \sim q_\phi(z | c^T)}[R(T, z) + \beta D_{KL}(q_\phi(z | c^T) || p(z))]]
+$$</p>
+<p>where \(p(z)\) is a unit Gaussian prior over \(Z\) and \(R(T, z)\) could be a variety of objectives, as discussed above.</p>
+<p>We note that an encoding of a fully observed MDP should be <strong>permutation invariant</strong>.</p>
+<p>Choose a permutation-invariant representation for \(q_\phi(z | c_{1:N})\), modeling it as a product of independent factors</p>
+<p>$$
+q_\phi(z | c_{1:N}) \propto \prod_{n=1}^N \Psi_\phi(z | c_n)
+$$</p>
+<p>To keep the method tractable, we use Gaussian factors \(\Psi_\phi(z | c_n) = N(f_\phi^\mu(c_n), f_\phi^\sigma(c_n))\), which result in a Gaussian posterior.</p>
+<p>The function \(f_\phi\), represented as a neural network parameterized by \(\phi\), predicts the mean \(\mu\) as well as the variance \(\sigma\) as a function of the \(c_n\), is shown in Figure 1.</p>
+<p><img src="assets/PEARL-1.png" alt="Fig 1." /></p>
+<h3 id="posterior-sampling-and-exploration-via-latent-contexts"><a class="header" href="#posterior-sampling-and-exploration-via-latent-contexts">Posterior Sampling and Exploration via Latent Contexts</a></h3>
+<p>PEARL directly infers a posterior over the latent context Z, which may encode the MDP itself if optimized for reconstruction, optimal behaviors if optimized for the policy, or the value function if optimized for a critic.</p>
+<h2 id="off-policy-meta-reinforcement-learning"><a class="header" href="#off-policy-meta-reinforcement-learning">Off-Policy Meta-Reinforcement Learning</a></h2>
+<p>Our main insight in designing an off-policy meta-RL method with the probabilistic context in Section 4 is that <strong>the data used to train the encoder need not be the same as the data used to train the policy</strong>.</p>
+<p>The policy can treat the context \(z\) as part of the state in an off-policy RL loop, while the stochasticity of the exploration process is provided by the uncertainty in the encoder \(q(z|c)\). The actor and critic are always trained with off-policy data sampled from the entire replay buffer \(B\).</p>
+<p>We define a sampler \(S_c\) to sample context batches for training the encoder.</p>
+<p>Allowing \(S_c\) to sample from the entire buffer presents too extreme of a distribution mismatch with on-policy test data. However, the context does not need to be strictly on-policy; we find that an in-between strategy of sampling from a replay buffer of recently collected data retains on-policy performance with better efficiency.</p>
+<p><img src="assets/PEARL-2.png" alt="Fig 2." /></p>
+<p>soft actor-critic algorithm (SAC), an off-policy actorcritic method based on the maximum entropy RL objective which augments the traditional sum of discounted returns with the entropy of the policy.</p>
+<p>The critic loss can then be written as</p>
+<p>$$
+L_{critic} = \mathbb{E}<em>{(s, a, r, s') \sim B, z \sim q</em>\phi (z | c)} [Q_\theta(s, a, z) - (r + \bar{V}(s', \bar{z}))] ^ 2
+$$</p>
+<p>where \(\bar{V}\) is a target network and \(\bar{z}\) indicates that gradients are not being computed through it.</p>
+<p>The actor loss is nearly identical to SAC, with the additional dependence on \(z\) as a policy input:</p>
+<p>$$
+L_{actor} = \mathbb{E}<em>{s \sim B, a \sim \pi</em>\theta, z \sim q_\phi(z | c)}[D_{KL}(\pi_\theta(a | s, \bar{z}) \parallel \frac{\exp(Q_\theta(s, a, \bar{z}))}{\mathcal{Z}_\theta(s)})]
+$$</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="../meta-RL/MAESN.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="../autonomous-systems/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="../meta-RL/MAESN.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="../autonomous-systems/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
